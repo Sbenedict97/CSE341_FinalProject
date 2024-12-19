@@ -1,14 +1,16 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('./config/db');
+require("dotenv").config();
+const express = require("express");
+const connectDB = require("../config/db");
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger/swagger.json');
+const swaggerDocument = require('../swagger/swagger.json');
 const categoryRoutes = require('./routes/categoryRoutes');
 const subscriptionRoutes = require('./routes/subscriptionRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+
+// Connect to MongoDB
+connectDB();
 
 // Middleware
 app.use(express.json());
@@ -23,7 +25,5 @@ app.use('/api/subscriptions', subscriptionRoutes);
 // Error Handling Middleware
 app.use(errorHandler);
 
-// Server Start
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

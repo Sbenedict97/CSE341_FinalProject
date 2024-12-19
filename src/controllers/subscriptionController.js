@@ -1,7 +1,7 @@
 const Subscription = require('../models/subscription');
 
 // Get all subscriptions
-exports.getSubscriptions = async (req, res, next) => {
+const getSubscriptions = async (req, res, next) => {
   try {
     const subscriptions = await Subscription.find().populate('category');
     res.status(200).json(subscriptions);
@@ -11,7 +11,7 @@ exports.getSubscriptions = async (req, res, next) => {
 };
 
 // Create a new subscription
-exports.createSubscription = async (req, res, next) => {
+const createSubscription = async (req, res, next) => {
   try {
     const { name, price, duration, category, description, isActive } = req.body;
     const subscription = new Subscription({ name, price, duration, category, description, isActive });
@@ -23,7 +23,7 @@ exports.createSubscription = async (req, res, next) => {
 };
 
 // Update a subscription
-exports.updateSubscription = async (req, res, next) => {
+const updateSubscription = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { name, price, duration, category, description, isActive } = req.body;
@@ -40,7 +40,7 @@ exports.updateSubscription = async (req, res, next) => {
 };
 
 // Delete a subscription
-exports.deleteSubscription = async (req, res, next) => {
+const deleteSubscription = async (req, res, next) => {
   try {
     const { id } = req.params;
     const subscription = await Subscription.findByIdAndDelete(id);
@@ -49,4 +49,11 @@ exports.deleteSubscription = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+module.exports = {
+  getSubscriptions,
+  createSubscription,
+  updateSubscription,
+  deleteSubscription
 };

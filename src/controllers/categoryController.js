@@ -1,7 +1,7 @@
 const Category = require('../models/category');
 
 // Get all categories
-exports.getCategories = async (req, res, next) => {
+const getCategories = async (req, res, next) => {
   try {
     const categories = await Category.find();
     res.status(200).json(categories);
@@ -11,7 +11,7 @@ exports.getCategories = async (req, res, next) => {
 };
 
 // Create a new category
-exports.createCategory = async (req, res, next) => {
+const createCategory = async (req, res, next) => {
   try {
     const { name, description } = req.body;
     const category = new Category({ name, description });
@@ -23,7 +23,7 @@ exports.createCategory = async (req, res, next) => {
 };
 
 // Update a category
-exports.updateCategory = async (req, res, next) => {
+const updateCategory = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { name, description } = req.body;
@@ -36,7 +36,7 @@ exports.updateCategory = async (req, res, next) => {
 };
 
 // Delete a category
-exports.deleteCategory = async (req, res, next) => {
+const deleteCategory = async (req, res, next) => {
   try {
     const { id } = req.params;
     const category = await Category.findByIdAndDelete(id);
@@ -45,4 +45,11 @@ exports.deleteCategory = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+module.exports = {
+  getCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory
 };

@@ -1,23 +1,31 @@
 {
-  "name": "subscription-management-api",
-  "version": "1.0.0",
-  "description": "API for Subscription Management with MongoDB",
-  "main": "src/app.js",
-  "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
-    "install": "pnpm install"
-  },
-  "dependencies": {
-    "express": "^4.17.1",
-    "mongoose": "^5.10.9",
-    "swagger-jsdoc": "^6.0.0",
-    "swagger-ui-express": "^4.1.6",
-    "dotenv": "^8.2.0",
-    "pnpm": "^7.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4"
-  },
-  "author": "Skyler Benedict"
+	"name": "subscription-management-api",
+	"version": "1.0.0",
+	"description": "API for Subscription Management with MongoDB",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:Sbenedict97/CSE341_FinalProject.git"
+	},
+	"author": "Skyler Benedict, Aniekan Winner Anietie",
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^5.1.1",
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.7",
+		"express": "^4.21.2",
+		"express-session": "^1.18.1",
+		"http-errors": "^2.0.0",
+		"joi": "^17.13.3",
+		"mongodb": "^6.11.0",
+		"mongoose": "^8.8.4",
+		"passport": "^0.7.0",
+		"passport-github2": "^0.1.12",
+		"swagger-jsdoc": "^6.2.8",
+		"swagger-ui-express": "^5.0.1"
+	}
 }
