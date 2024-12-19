@@ -21,6 +21,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Routes
 app.use('/api/categories', categoryRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/products', productRoutes);
 
 // Error Handling Middleware
 app.use(errorHandler);

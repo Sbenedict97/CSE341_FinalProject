@@ -25,14 +25,9 @@ const createSubscription = async (req, res, next) => {
 // Update a subscription
 const updateSubscription = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const { name, price, duration, category, description, isActive } = req.body;
-    const subscription = await Subscription.findByIdAndUpdate(
-      id,
-      { name, price, duration, category, description, isActive },
-      { new: true }
-    );
-    if (!subscription) throw new Error('Subscription not found');
+    const options = { new: true };
+    const subscription = await Subscription.findByIdAndUpdate(req.params.id, req.body, options);
+    if (!subscription) return res.status(404).json({ error: 'Subscription not found' });
     res.status(200).json(subscription);
   } catch (error) {
     next(error);
@@ -42,9 +37,8 @@ const updateSubscription = async (req, res, next) => {
 // Delete a subscription
 const deleteSubscription = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const subscription = await Subscription.findByIdAndDelete(id);
-    if (!subscription) throw new Error('Subscription not found');
+    const subscription = await Subscription.findByIdAndDelete(req.params.id);
+    if (!subscription) return res.status(404).json({ error: 'Subscription not found' });
     res.status(200).json({ message: 'Subscription deleted' });
   } catch (error) {
     next(error);

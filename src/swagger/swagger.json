@@ -3,225 +3,58 @@
   "info": {
     "title": "Subscription Management API",
     "version": "1.0.0",
-    "description": "API for managing users and their subscriptions."
+    "description": "API for managing categories and subscriptions."
   },
   "servers": [
     {
-      "url": "https://cse341-finalproject-xr8a.onrender.com/",
-      "description": "Production Server"
-    },
-    {
-      "url": "http://localhost:3000",
-      "description": "Local Development Server"
+      "url": "http://localhost:3000/api",
+      "description": "Local server"
     }
   ],
-  "paths": {
-    "/users": {
-      "get": {
-        "summary": "Get all users",
-        "responses": {
-          "200": {
-            "description": "List of all users",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          }
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" }
         }
       },
-      "post": {
-        "summary": "Create a new user",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
+      "CategoryInput": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" }
         },
-        "responses": {
-          "201": {
-            "description": "User created successfully"
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "summary": "Get a user by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found"
-          }
+        "required": ["name", "description"]
+      },
+      "Subscription": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "price": { "type": "number" },
+          "duration": { "type": "string" },
+          "category": { "$ref": "#/components/schemas/Category" },
+          "description": { "type": "string" },
+          "isActive": { "type": "boolean" },
+          "createdAt": { "type": "string", "format": "date-time" }
         }
       },
-      "put": {
-        "summary": "Update a user by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
+      "SubscriptionInput": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "price": { "type": "number" },
+          "duration": { "type": "string" },
+          "category": { "type": "string" },
+          "description": { "type": "string" },
+          "isActive": { "type": "boolean" }
         },
-        "responses": {
-          "200": {
-            "description": "User updated successfully"
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a user by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User deleted successfully"
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
+        "required": ["name", "price", "duration", "category", "description"]
       }
-    },
-    "/subscriptions": {
-      "get": {
-        "summary": "Get all subscriptions",
-        "responses": {
-          "200": {
-            "description": "List of all subscriptions",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Subscription"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new subscription",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Subscription"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Subscription created successfully"
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/subscriptions/{id}": {
-      "get": {
-        "summary": "Get a subscription by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Subscription retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Subscription"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Subscription not found"
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a subscription by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application
+    }
+  }
+}
