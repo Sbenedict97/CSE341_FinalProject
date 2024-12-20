@@ -20,10 +20,19 @@ const getUserById = async (req, res, next) => {
 	}
 };
 
+const getProfile = async (req, res, next) => {
+    try {
+        if (!req.user) return res.status(401).json({ error: "Unauthorized" });
+        res.status(200).json(req.user);
+    } catch (error) {
+        next(error);
+    }
+};
+
 const updateProfile = async (req, res, next) => {
 	try {
 		if (!req.user) return res.status(401).json({ error: "Unauthorized" });
-		const allowedUpdates = ["name", "email", "password"];
+		const allowedUpdates = ["name", "email"];
 		const updates = {};
 		for (let key of allowedUpdates) {
 			if (req.body[key] !== undefined) {
@@ -74,4 +83,5 @@ module.exports = {
 	getAllUsers,
 	updateProfile,
 	createUser,
+	getProfile,
 };
