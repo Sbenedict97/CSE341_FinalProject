@@ -13,6 +13,14 @@ const profileUpdateSchema = Joi.object({
   avatar: Joi.string().uri(),
 });
 
+const userCreationSchema = Joi.object({
+    username: Joi.string().required(),
+    displayName: Joi.string().required(),
+    email: Joi.string().email().required(),
+    phone: Joi.string(),
+    country: Joi.string()
+});
+
 function validateUser(req, res, next) {
   const { error } = userSchema.validate(req.body);
   if (error) {
@@ -29,4 +37,12 @@ function validateProfileUpdate(req, res, next) {
   next();
 }
 
-module.exports = { validateUser, validateProfileUpdate };
+function validateUserCreation(req, res, next) {
+    const { error } = userCreationSchema.validate(req.body);
+    if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+    }
+    next();
+}
+
+module.exports = { validateUserCreation, validateProfileUpdate };
