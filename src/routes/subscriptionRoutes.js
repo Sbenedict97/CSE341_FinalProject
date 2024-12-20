@@ -122,4 +122,5 @@ router.post("/", isAuthenticated, validateSubscription, createSubscription);
 router.put("/:id", isAuthenticated, validateSubscription, updateSubscription);
 router.delete("/:id", isAuthenticated, deleteSubscription);
 
-module.exports = router;
+// Export isAuthenticated for testing
+module.exports = { router, isAuthenticated };

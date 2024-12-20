@@ -8,10 +8,10 @@ const errorHandler = require("./middleware/errorHandler");
 const { swaggerUi, swaggerSpec } = require("./docs/swagger");
 
 // Routes
-const categoryRoutes = require("./routes/categoryRoutes");
-const subscriptionRoutes = require("./routes/subscriptionRoutes");
-const userRoutes = require("./routes/userRoutes");
-const reminderRoutes = require("./routes/reminderRoutes");
+const { router: categoryRoutes } = require("./routes/categoryRoutes");
+const { router: subscriptionRoutes } = require("./routes/subscriptionRoutes");
+const { router: userRoutes } = require("./routes/userRoutes");
+const { router: reminderRoutes } = require("./routes/reminderRoutes");
 const authRoutes = require("./routes/authRoutes");
 
 // Passport
@@ -56,12 +56,12 @@ app.use(errorHandler);
 
 // Connect to MongoDB
 connectDB()
-	.then(() => {
-		app.listen(port, () => {
-			console.log(`Server running on port ${port}`);
-		});
-	})
-	.catch((err) => {
-		console.error("Failed to connect to DB", err);
-		process.exit(1);
-	});
+    .then(() => {
+        console.log("Connected to DB");
+    })
+    .catch((err) => {
+        console.error("Failed to connect to DB", err);
+        process.exit(1);
+    });
+
+module.exports = app;

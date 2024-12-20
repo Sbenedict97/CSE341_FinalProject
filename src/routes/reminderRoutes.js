@@ -70,4 +70,5 @@ router.get("/", isAuthenticated, getReminders);
 router.post("/", isAuthenticated, validateReminder, createReminder);
 router.delete("/:id", isAuthenticated, deleteReminder);
 
-module.exports = router;
+// Export isAuthenticated for testing
+module.exports = { router, isAuthenticated };

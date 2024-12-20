@@ -51,4 +51,5 @@ function isAuthenticated(req, res, next) {
 router.get("/profile", isAuthenticated, getProfile);
 router.put("/profile", isAuthenticated, validateProfileUpdate, updateProfile);
 
-module.exports = router;
+// Export isAuthenticated for testing
+module.exports = { router, isAuthenticated };

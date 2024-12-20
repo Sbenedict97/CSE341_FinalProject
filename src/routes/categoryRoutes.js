@@ -122,4 +122,5 @@ router.post("/", isAuthenticated, validateCategory, createCategory);
 router.put("/:id", isAuthenticated, validateCategory, updateCategory);
 router.delete("/:id", isAuthenticated, deleteCategory);
 
-module.exports = router;
+// Export isAuthenticated for testing
+module.exports = { router, isAuthenticated };
