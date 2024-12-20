@@ -35,8 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const corsOptions = {
-	// origin: "https://subscription-manager-snvw.onrender.com",
-	origin: "http://localhost:3000",
+	origin: "https://subscription-manager-snvw.onrender.com",
 	optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
@@ -56,12 +55,12 @@ app.use(errorHandler);
 
 // Connect to MongoDB
 connectDB()
-    .then(() => {
-        console.log("Connected to DB");
-    })
-    .catch((err) => {
-        console.error("Failed to connect to DB", err);
-        process.exit(1);
-    });
+	.then(() => {
+		console.log("Connected to DB");
+	})
+	.catch((err) => {
+		console.error("Failed to connect to DB", err);
+		process.exit(1);
+	});
 
 module.exports = app;
