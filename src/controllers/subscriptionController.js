@@ -10,6 +10,17 @@ const getSubscriptions = async (req, res, next) => {
   }
 };
 
+// Get subscription by ID
+const getSubscriptionById = async (req, res, next) => {
+  try {
+    const subscription = await Subscription.findById(req.params.id).populate('category');
+    if (!subscription) return res.status(404).json({ error: 'Subscription not found' });
+    res.status(200).json(subscription);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Create a new subscription
 const createSubscription = async (req, res, next) => {
   try {
@@ -47,6 +58,7 @@ const deleteSubscription = async (req, res, next) => {
 
 module.exports = {
   getSubscriptions,
+  getSubscriptionById,
   createSubscription,
   updateSubscription,
   deleteSubscription

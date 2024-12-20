@@ -1,6 +1,7 @@
 const express = require('express');
 const {
   getSubscriptions,
+  getSubscriptionById,
   createSubscription,
   updateSubscription,
   deleteSubscription,
@@ -11,6 +12,7 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  * @swagger
  * /subscriptions:
  *   get:
+ *     tags: [Subscriptions]
  *     summary: Get all subscriptions
  *     responses:
  *       200:
@@ -22,6 +24,7 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  *               items:
  *                 $ref: '#/components/schemas/Subscription'
  *   post:
+ *     tags: [Subscriptions]
  *     summary: Create a new subscription
  *     requestBody:
  *       required: true
@@ -37,6 +40,7 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  * 
  * /subscriptions/{id}:
  *   get:
+ *     tags: [Subscriptions]
  *     summary: Get a subscription by ID
  *     parameters:
  *       - name: id
@@ -54,6 +58,7 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  *       404:
  *         description: Subscription not found
  *   put:
+ *     tags: [Subscriptions]
  *     summary: Update a subscription by ID
  *     parameters:
  *       - name: id
@@ -75,6 +80,7 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  *       404:
  *         description: Subscription not found
  *   delete:
+ *     tags: [Subscriptions]
  *     summary: Delete a subscription by ID
  *     parameters:
  *       - name: id
@@ -92,6 +98,7 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
 const router = express.Router();
 
 router.get('/', getSubscriptions);
+router.get('/:id', getSubscriptionById);
 router.post('/', validateSubscription, createSubscription);
 router.put('/:id', validateSubscription, updateSubscription);
 router.delete('/:id', deleteSubscription);

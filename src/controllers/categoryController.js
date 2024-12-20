@@ -10,6 +10,17 @@ const getCategories = async (req, res, next) => {
   }
 };
 
+// Get category by ID
+const getCategoryById = async (req, res, next) => {
+  try {
+    const category = await Category.findById(req.params.id);
+    if (!category) return res.status(404).json({ error: 'Category not found' });
+    res.status(200).json(category);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Create a new category
 const createCategory = async (req, res, next) => {
   try {
@@ -47,6 +58,7 @@ const deleteCategory = async (req, res, next) => {
 
 module.exports = {
   getCategories,
+  getCategoryById,
   createCategory,
   updateCategory,
   deleteCategory

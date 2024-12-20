@@ -1,6 +1,7 @@
 const express = require('express');
 const {
   getCategories,
+  getCategoryById,
   createCategory,
   updateCategory,
   deleteCategory,
@@ -11,6 +12,7 @@ const { validateCategory } = require('../validators/categoryValidator');
  * @swagger
  * /categories:
  *   get:
+ *     tags: [Categories]
  *     summary: Get all categories
  *     responses:
  *       200:
@@ -22,6 +24,7 @@ const { validateCategory } = require('../validators/categoryValidator');
  *               items:
  *                 $ref: '#/components/schemas/Category'
  *   post:
+ *     tags: [Categories]
  *     summary: Create a new category
  *     requestBody:
  *       required: true
@@ -37,6 +40,7 @@ const { validateCategory } = require('../validators/categoryValidator');
  * 
  * /categories/{id}:
  *   get:
+ *     tags: [Categories]
  *     summary: Get a category by ID
  *     parameters:
  *       - name: id
@@ -54,6 +58,7 @@ const { validateCategory } = require('../validators/categoryValidator');
  *       404:
  *         description: Category not found
  *   put:
+ *     tags: [Categories]
  *     summary: Update a category by ID
  *     parameters:
  *       - name: id
@@ -75,6 +80,7 @@ const { validateCategory } = require('../validators/categoryValidator');
  *       404:
  *         description: Category not found
  *   delete:
+ *     tags: [Categories]
  *     summary: Delete a category by ID
  *     parameters:
  *       - name: id
@@ -92,6 +98,7 @@ const { validateCategory } = require('../validators/categoryValidator');
 const router = express.Router();
 
 router.get('/', getCategories);
+router.get('/:id', getCategoryById);
 router.post('/', validateCategory, createCategory);
 router.put('/:id', validateCategory, updateCategory);
 router.delete('/:id', deleteCategory);
