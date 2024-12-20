@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const { connectDB } = require("./config/db");
 const categoryRoutes = require("./routes/categoryRoutes");
 const subscriptionRoutes = require("./routes/subscriptionRoutes");
@@ -11,6 +12,7 @@ const port = process.env.PORT || 3001;
 
 // Middleware
 app.use(express.json());
+app.use(cors()); // Enable CORS
 
 // Routes
 app.use("/categories", categoryRoutes);
@@ -24,12 +26,12 @@ app.use(errorHandler);
 
 // Connect to MongoDB
 connectDB()
-	.then(() => {
-		app.listen(port, () => {
-			console.log(`Server running on port ${port}`);
-		});
-	})
-	.catch((err) => {
-		console.error("Failed to connect to DB", err);
-		process.exit(1);
-	});
+    .then(() => {
+        app.listen(port, () => {
+            console.log(`Server running on port ${port}`);
+        });
+    })
+    .catch((err) => {
+        console.error("Failed to connect to DB", err);
+        process.exit(1);
+    });
