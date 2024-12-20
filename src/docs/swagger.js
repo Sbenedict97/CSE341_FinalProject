@@ -7,11 +7,12 @@ const options = {
 		info: {
 			title: "Subscription Management API",
 			version: "1.0.0",
-			description: "API for managing categories and subscriptions.",
+			description:
+				"API for managing categories, subscriptions, users, and reminders.",
 		},
 		servers: [
 			{
-				url: "https://subscription-manager-snvw.onrender.com/",
+				url: "http://localhost:3000/",
 				description: "Deployed server",
 			},
 		],
@@ -23,6 +24,14 @@ const options = {
 			{
 				name: "Subscriptions",
 				description: "Everything about subscriptions",
+			},
+			{
+				name: "Users",
+				description: "User profile operations",
+			},
+			{
+				name: "Reminders",
+				description: "Subscription reminder operations",
 			},
 		],
 		components: {
@@ -68,6 +77,27 @@ const options = {
 						isActive: { type: "boolean" },
 					},
 					required: ["name", "price", "duration", "category", "description"],
+				},
+				User: {
+					type: "object",
+					properties: {
+						id: { type: "string" },
+						name: { type: "string" },
+						email: { type: "string" },
+						githubId: { type: "string" },
+						avatar: { type: "string" },
+					},
+				},
+				Reminder: {
+					type: "object",
+					properties: {
+						id: { type: "string" },
+						title: { type: "string" },
+						description: { type: "string" },
+						dueDate: { type: "string", format: "date-time" },
+						userId: { type: "string" },
+						completed: { type: "boolean" },
+					},
 				},
 			},
 		},

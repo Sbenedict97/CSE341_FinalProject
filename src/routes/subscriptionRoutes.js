@@ -1,12 +1,23 @@
-const express = require('express');
+const express = require("express");
 const {
-  getSubscriptions,
-  getSubscriptionById,
-  createSubscription,
-  updateSubscription,
-  deleteSubscription,
-} = require('../controllers/subscriptionController');
-const { validateSubscription } = require('../validators/subscriptionValidator');
+	getSubscriptions,
+	getSubscriptionById,
+	createSubscription,
+	updateSubscription,
+	deleteSubscription,
+} = require("../controllers/subscriptionController");
+const { validateSubscription } = require("../validators/subscriptionValidator");
+const router = express.Router();
+
+// Middleware to check if the user is authenticated
+function isAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	return res.status(401).json({ error: "Unauthorized access" });
+}
+
+// Swagger documentation
 
 /**
  * @swagger
@@ -14,6 +25,8 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  *   get:
  *     tags: [Subscriptions]
  *     summary: Get all subscriptions
+ *     security:
+ *      - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of all subscriptions
@@ -26,6 +39,8 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  *   post:
  *     tags: [Subscriptions]
  *     summary: Create a new subscription
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -37,11 +52,13 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  *         description: Subscription created successfully
  *       400:
  *         description: Invalid input
- * 
+ *
  * /subscriptions/{id}:
  *   get:
  *     tags: [Subscriptions]
  *     summary: Get a subscription by ID
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -60,6 +77,8 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  *   put:
  *     tags: [Subscriptions]
  *     summary: Update a subscription by ID
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -82,6 +101,8 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  *   delete:
  *     tags: [Subscriptions]
  *     summary: Delete a subscription by ID
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -95,12 +116,10 @@ const { validateSubscription } = require('../validators/subscriptionValidator');
  *         description: Subscription not found
  */
 
-const router = express.Router();
-
-router.get('/', getSubscriptions);
-router.get('/:id', getSubscriptionById);
-router.post('/', validateSubscription, createSubscription);
-router.put('/:id', validateSubscription, updateSubscription);
-router.delete('/:id', deleteSubscription);
+router.get("/", isAuthenticated, getSubscriptions);
+router.get("/:id", isAuthenticated, getSubscriptionById);
+router.post("/", isAuthenticated, validateSubscription, createSubscription);
+router.put("/:id", isAuthenticated, validateSubscription, updateSubscription);
+router.delete("/:id", isAuthenticated, deleteSubscription);
 
 module.exports = router;
