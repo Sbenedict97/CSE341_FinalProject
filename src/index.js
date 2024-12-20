@@ -12,7 +12,12 @@ const port = process.env.PORT || 3001;
 
 // Middleware
 app.use(express.json());
-app.use(cors()); // Enable CORS
+
+const corsOptions = {
+	origin: "https://subscription-manager-snvw.onrender.com",
+	optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 // Routes
 app.use("/categories", categoryRoutes);
@@ -26,12 +31,12 @@ app.use(errorHandler);
 
 // Connect to MongoDB
 connectDB()
-    .then(() => {
-        app.listen(port, () => {
-            console.log(`Server running on port ${port}`);
-        });
-    })
-    .catch((err) => {
-        console.error("Failed to connect to DB", err);
-        process.exit(1);
-    });
+	.then(() => {
+		app.listen(port, () => {
+			console.log(`Server running on port ${port}`);
+		});
+	})
+	.catch((err) => {
+		console.error("Failed to connect to DB", err);
+		process.exit(1);
+	});
